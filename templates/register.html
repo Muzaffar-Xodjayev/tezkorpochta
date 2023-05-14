@@ -1,0 +1,95 @@
+{% extends 'basic.html' %}
+{% block myblock %}
+<div class="container" style="margin-top:150px;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-8 mx-auto">
+            <form method="post">
+              {% if msg %}
+              <div class="col-lg-12 {{status}}">{{msg}}</div>
+              {% endif %}   
+              {% csrf_token %}
+              <h3>Ro'yhatdan O'tish</h3><hr>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label class="form-label">Ismingiz</label>
+                  <input type="text" class="form-control" required name="fname" placeholder="Ismingizni kiriting...">
+                </div>
+                <div class="col-lg-6">
+                  <label class="form-label">Familiyangiz</label>
+                  <input type="text" class="form-control" required name="lname" placeholder="Familiyangizni kiriting...">
+                </div>
+                <div class="col-lg-12 mt-3">
+                  <label class="form-label">Telefon Raqam </label>
+                  <div id="res1" style="font-size:14px;"></div>
+                  <input type="text" class="form-control" oninput="check_user()" required name="phone_number" id="phone_number" placeholder="+998930001122">
+                </div>
+                <div class="col-lg-6 mt-3">
+                  <label class="form-label">Doimiy Parol</label>
+                  <div id="password_length" style="font-size:14px;"></div>
+                  <input type="password" class="form-control" oninput="check_user()" required name="pwd" id="pwd1" placeholder="Parol...">
+                </div>
+                <div class="col-lg-6 mt-3">
+                  <label class="form-label">Doimiy Parol (qaytadan)</label>
+                  <div id="res2" style="font-size:14px;"></div>
+                  <input type="password" class="form-control" oninput="check_user()" name="password2" required id="pwd2" placeholder="Parolni qayta kiriting...">
+                </div>
+                <div class="col-lg-12 mt-3">
+                  <div class="g-recaptcha" data-sitekey="6LevaQAmAAAAAOYQOp7cZj_duT0gYYKy92uMqwJi"></div>
+                </div> 
+              </div>
+              <hr>
+              <input type="submit" class="btn btn-success mt-1" id="sBtn" value="Ro'yhatdan O'tish">
+            </form>
+            <hr>
+            <a href="{% url 'login-page' %}">Akkauntga Kirish</a>
+        </div>
+    </div>
+</div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  function check_user(){
+    let password = document.getElementById('pwd1').value;
+    let password2 = document.getElementById('pwd2').value;
+    let p_number = document.getElementById('phone_number').value;
+    let SubmitBtn = document.getElementById('sBtn').value;
+    let password_length = document.getElementById('password_length');
+    let res1 = document.getElementById('res1').value;
+    let res2 = document.getElementById('res2').value;
+    const regex = /^\+(998)[0-9]{2}\d{7}$/;
+    $.ajax({
+      url: "{% url 'check-user' %}",
+      type: "get",
+      data: {phone_number:p_number},
+      success: function(data){
+        if(data=='Exists'){
+          $('#res1').html('').removeClass('text-danger')
+          $('#res1').html("Bu raqamdan avval foydalanilgan").addClass('text-danger')
+          $('#sBtn').attr('disabled','disabled')
+        }else if(password!=password2){
+          $('#res2').html('').removeClass('text-danger')
+          $('#res2').html('Parollar bir xil emas').addClass('text-danger')
+          $('#sBtn').attr('disabled','disabled')
+        }else if(regex.test(p_number) == false){
+          $('#res1').html('').removeClass('text-danger')
+          $('#res1').html("O'zbekistonga tegishli raqam kiriting").addClass('text-danger')
+          $('#sBtn').attr('disabled','disabled')
+        }else{
+          $('#res1').html('').removeClass('text-danger')
+          $('#res2').html('').removeClass('text-danger')
+          $('#sBtn').removeAttr('disabled')
+        }
+      }
+    })
+    if(password.length < 4 && password2.length < 4){
+      password_length.innerHTML = "Parol 4 ta belgidan kam bo'lmasligi kerak !!!";
+      password_length.classList.add("text-danger");
+      SubmitBtn.setAttribute("disabled", "disabled");
+    }else{
+      password_length.innerHTML = "";
+      password_length.classList.remove("text-danger");
+      SubmitBtn.removeAttribute("disabled");
+    }
+  }
+</script>
+{% endblock %}

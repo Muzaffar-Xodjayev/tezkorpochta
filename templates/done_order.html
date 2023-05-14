@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block myblock %}
+
+<div class="container" style="margin-top:150px;">
+    <div class="row">
+        <div class="col-lg-3 mx-auto">
+            <div class="card shadow p-3">
+                <img src="{% static '/assets/images/qr.jpg' %}" id="img" class="img-float" alt="">
+                <hr>
+                <h5 class="mt-3" id="text">To'lovni amalga oshirish uchun QR kodni skaner qiling 👆</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    let text = document.getElementById("text");
+    let img = document.getElementById("img");
+
+    setTimeout(function() {
+        text.innerHTML = "To'lov muvaffaqiyatli qabul qilindi va Buyurtmangiz tez orada o'z egasiga yetib boradi"
+        img.src = "{% static 'assets/images/order.png' %}"
+    }, 15000)
+
+</script>
+{% endblock %}

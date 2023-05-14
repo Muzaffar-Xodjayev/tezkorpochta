@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Tezkor pochta 24/7</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'assets/css/animated.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-digimedia-v1.css' %}">
+<!--
+
+-->
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- Pre-header Starts -->
+  <div class="pre-header" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-sm-8 col-6">
+          <ul class="info">
+            <li><a href="#"><i class="fa fa-envelope"></i>info@tezkorpochta.com</a></li>
+            <li><a href="#"><i class="fa fa-phone"></i>+998 93 000-11-22</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-6">
+          <ul class="social-media">
+            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-telegram"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Pre-header End -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{% url 'intro-page' %}" class="logo" id="logo">
+              Tezkor Pochta
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            {% if request.user.phone_verify %}
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="#">Salom, {{ request.user.first_name }}</a></li>
+              <li class="scroll-to-section"><a href="/">Bosh Sahifa</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="{% url 'register-page' %}">Ro'yhatdan O'tish</a></li>
+              <li class="scroll-to-section"><a href="{% url 'login-page' %}">Kirish</a></li>
+            </ul>
+            {% endif %}
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <style>
+    .list-item-group-bg-purple{
+      background-color: #c685bf;
+      border-color: #c685bf;
+      transition: 0.3s;
+      color: #fff;
+    }
+  </style>
+  <div class="container" style="margin-top: 120px;">
+    {% block profileBlock %}
+    <div class="row">
+      <div class="col-lg-4 col-md-10 col-12 my-2">
+        <div class="list-group">
+          <a href="{% url 'profile-page' %}" class="list-group-item list-group-item-action list-item-group-bg-purple" aria-current="true">
+            Mening Ma'lumotlarim
+          </a>
+          <a href="{% url 'my-order-page' %}" class="list-group-item list-group-item-action">Buyurtmalarim</a>
+          <a href="{% url 'edit-password-page' %}" class="list-group-item list-group-item-action">Parolni o'zgartirish</a>
+          <a href="{% url 'logout-page'%}" class="list-group-item list-group-item-action">Saytdan Chiqish</a>
+  
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-10 col-12 my-2">
+        <div class="card shadow p-3">
+          <h4 align="center">Mening ma'lumotlarim</h4>
+          <hr>
+          <h5 class="text-muted my-2">Ism : <span class="text-dark">{{ data.first_name }}</span></h5>
+          <h5 class="text-muted my-2">Familiya : <span class="text-dark">{{data.last_name}}</span></h5>
+          <h5 class="text-muted my-2">Telefon Raqam : <span class="text-dark">{{data.phone_number}}</span></h5>
+          <h5 class="text-muted my-2">Parol : <span class="text-dark">******</span></h5>
+          <hr>
+          <div class="d-flex justify-content-end">
+            <button class="btn list-item-group-bg-purple"><a href="{% url 'edit-profile-page' %}" class="text-white">Tahrirlash</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p> &copy; 2023 Barcha huquqlar ximoyalangan.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'assets/js/animation.js' %}"></script>
+  <script src="{% static 'assets/js/imagesloaded.js' %}"></script>
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+
+</body>
+</html>
+

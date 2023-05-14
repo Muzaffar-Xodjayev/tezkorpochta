@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+{% block myblock %}
+<div class="container" style="margin-top:150px;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-8 mx-auto">
+            <form method="post">
+              {% if msg %}
+              <div class="col-lg-12 {{status}}">{{msg}}</div>
+              {% endif %}   
+              {% csrf_token %}
+              <h3>Telefon raqamni tasdiqlash</h3>
+              <div class="row">
+                <div class="col-lg-12 mt-3">
+                  <label class="form-label">Tasdiqlash kodi </label>
+                  <p>{{ request.session.phone_number }} raqamiga tasdiqlash kodi sms orqali yuborildi!</p>
+                  <div id="res1" style="font-size:14px;"></div>
+                  <input type="text" class="form-control"  required name="verify_code" id="verify_code" placeholder="12345">
+                </div>
+              </div>
+              <hr>
+              <input type="submit" class="btn btn-success mt-1" id="sBtn" value="Tasdiqlash">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

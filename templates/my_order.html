@@ -1,0 +1,63 @@
+{% extends 'profile.html' %}
+{% block profileBlock %}
+<div class="row">
+    <div class="col-lg-3 col-md-10 col-12 my-2">
+      <div class="list-group">
+        <a href="{% url 'profile-page' %}" class="list-group-item list-group-item-action" aria-current="true">
+          Mening Ma'lumotlarim
+        </a>
+        <a href="#" class="list-group-item list-group-item-action list-item-group-bg-purple">Buyurtmalarim</a>
+        <a href="{% url 'edit-password-page' %}" class="list-group-item list-group-item-action">Parolni o'zgartirish</a>
+        <a href="{% url 'logout-page'%}" class="list-group-item list-group-item-action">Saytdan Chiqish</a>
+
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-10 col-12 my-2">
+      <div class="card shadow p-3">
+        <h4 align="center">Mening Buyurtmalarim</h4>
+        <hr>
+        <table class="table">
+            <thead>
+                <th>Junatuvchining ismi</th>
+                <th>Mahsulot nomi</th>
+                <th>Mahsulot narxi</th>
+                <th>Boradigan manzili</th>
+                <th>Oluvchining ismi</th>
+                <th>Mahsulotning holati</th>
+            </thead>
+            <tbody>
+                {% for data in datas %}
+                    <tr>
+                        <td>{{data.sender_person_name}}</td>
+                        <td>{{data.product_name}}</td>
+                        <td>{{data.product_price}}</td>
+                        <td>{{data.address|truncatechars:30}}</td>
+                        <td>{{data.client_name}}</td>
+                        <td>{{data.product_status}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  function check_user(){
+    let pwd = document.getElementById('pwd').value;
+    let pwd2 = document.getElementById('pwd2').value;
+    let res2 = document.getElementById('res2').value;
+    let SubmitBtn = document.getElementById('sBtn').value;
+    console.log(pwd,pwd2)
+    if(pwd!=pwd2){
+        $('#res2').html('').removeClass('text-danger')
+        $('#res2').html("Parollar mos emas").addClass('text-danger')
+        $('#sBtn').attr('disabled','disabled')
+    }else{
+        $('#res2').html('').removeClass('text-danger')
+        $('#sBtn').removeAttr('disabled')
+    }
+
+  }
+</script>
+{% endblock %}

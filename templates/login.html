@@ -1,0 +1,53 @@
+{% extends 'basic.html' %}
+{% block myblock %}
+<div class="container" style="margin-top:150px;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-8 mx-auto">
+            <form method="post">
+              {% if msg %}
+              <div class="col-lg-12 {{status}}">{{msg}}</div>
+              {% endif %}   
+              <h3>Saytga kirish</h3><hr>
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-12 mt-3">
+                  <label class="form-label">Telefon Raqam </label>
+                  <div id="res1" style="font-size:14px;"></div>
+                  <input type="text" class="form-control"  required oninput="check_user()" name="phone_number" id="phone_number" placeholder="+998930001122">
+                </div>
+                <div class="col-lg-12 mt-3">
+                  <label class="form-label">Parol</label>
+                  <input type="password" class="form-control" required name="pwd" id="pwd1" placeholder="Parol...">
+                </div>
+              </div>
+              <hr>
+              <input type="submit" class="btn btn-success mt-1" id="sBtn" value="Kirish">
+            </form>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'register-page' %}">Ro'yhatdan O'tish</a>
+                <a href="{% url 'forgot-password-page' %}">Parolni unutdingizmi ?</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  function check_user(){
+    let p_number = document.getElementById('phone_number').value;
+    let SubmitBtn = document.getElementById('sBtn').value;
+    let res1 = document.getElementById('res1').value;
+    const regex = /^\+(998)[0-9]{2}\d{7}$/;
+    if(regex.test(p_number) == false){
+        $('#res1').html('').removeClass('text-danger')
+        $('#res1').html("O'zbekistonga tegishli raqam kiriting").addClass('text-danger')
+        $('#sBtn').attr('disabled','disabled')
+    }else{
+        $('#res1').html('').removeClass('text-danger')
+        $('#sBtn').removeAttr('disabled')
+    }
+    
+  }
+</script>
+{% endblock %}
+
